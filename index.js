@@ -29,3 +29,5 @@ app.post("/rbg", function (req, res) {
 });
 
 app.listen(5000, () => console.log("App running on port", 5000));
+
+module.exports = app
