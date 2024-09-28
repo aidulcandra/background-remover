@@ -15,7 +15,7 @@ app.post("/rbg", function (req, res) {
   console.log(JSON.stringify(req.body, null, 2));
   const base64 = req.body?.base64;
   const buffer = Buffer.from(base64, "base64");
-  const fileName = `temp/file-${Date.now()}.jpg`;
+  const fileName = `./temp/file-${Date.now()}.jpg`;
   fs.writeFileSync(fileName, buffer);
   removeBackground(fileName, {
     debug: true,
@@ -25,7 +25,8 @@ app.post("/rbg", function (req, res) {
   })
     .then((blob) => blob.arrayBuffer())
     .then((arrayBuffer) => Buffer.from(arrayBuffer))
-    .then((buffer) => res.send(buffer));
+    .then((buffer) => res.send(buffer))
+    .then(() => fs.unlinkSync(fileName)
 });
 
 app.listen(5000, () => console.log("App running on port", 5000));
